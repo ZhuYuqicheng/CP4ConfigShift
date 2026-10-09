@@ -1,0 +1,19 @@
+# Prompt-template shift, white-box scores (LAC, logit margin), multiple-choice.
+# The white-box temperature shift reuses these runs (temperature is applied when scoring).
+# MedMCQA: cp4cs collect <this file> --dataset data/medmcqa.jsonl --output-dir runs/medmcqa/prompt_logits
+dataset: data/mmlu.jsonl
+templates: examples/configs/templates_mcqa.yaml
+output_dir: runs/mmlu/prompt_logits
+mode: logits
+model:
+  - meta-llama/Llama-3.2-1B-Instruct
+  - meta-llama/Llama-3.2-3B-Instruct
+  - meta-llama/Meta-Llama-3-8B
+  - google/gemma-3-1b-it
+  - google/gemma-3-4b-it
+  - google/gemma-3-12b-it
+  - Qwen/Qwen3.5-0.8B
+  - Qwen/Qwen3.5-4B
+  - Qwen/Qwen3.5-9B
+template: [Baseline, dash_lower, dash_numeric, dash_upper, dot_lower, dot_numeric, dot_upper,
+           formal, minimal, no_cot, no_subject, paren_lower, paren_numeric, zero_shot]

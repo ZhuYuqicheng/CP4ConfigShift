@@ -1,0 +1,233 @@
+# Multiple-choice prompt templates used in the paper (MMLU and MedMCQA).
+# Baseline is the one-shot prompt of Kumar et al. (2023); the other 13 vary the
+# option format, the instruction wording, or drop one prompt component.
+# Placeholders: see cp4configshift/prompts.py. {subject} and the one-shot demo
+# come from each example's meta (see examples/prepare_datasets.py).
+
+choice_styles:
+  paren_upper:     {format: "({label}) {text}", labels: ["A", "B", "C", "D"]}
+  paren_lower:     {format: "({label}) {text}", labels: ["a", "b", "c", "d"]}
+  paren_numeric:   {format: "({label}) {text}", labels: ["1", "2", "3", "4"]}
+  dot_upper:       {format: "{label}. {text}",  labels: ["A", "B", "C", "D"]}
+  dot_lower:       {format: "{label}. {text}",  labels: ["a", "b", "c", "d"]}
+  dot_numeric:     {format: "{label}. {text}",  labels: ["1", "2", "3", "4"]}
+  dash_upper:      {format: "{label}) {text}",  labels: ["A", "B", "C", "D"]}
+  dash_lower:      {format: "{label}) {text}",  labels: ["a", "b", "c", "d"]}
+  dash_numeric:    {format: "{label}) {text}",  labels: ["1", "2", "3", "4"]}
+
+templates:
+
+  # ── Baseline (paper-faithful) ───────────────────────────────────────
+
+  Baseline:
+    description: "Paper-faithful one-shot prompt (Kumar & Lu 2023)"
+    choice_style: paren_upper
+    prompt: |-
+      This is a question from {subject}.
+
+      {demo_question}
+      {demo_choices}
+      The correct answer is option: {demo_answer}.
+
+      Reason step-by-step and answer the following question.
+      {question}
+      {choices}
+      The correct answer is option: 
+
+  # ── Ablations (remove one component at a time) ─────────────────────
+
+  no_subject:
+    description: "Remove subject instruction"
+    choice_style: paren_upper
+    prompt: |-
+      {demo_question}
+      {demo_choices}
+      The correct answer is option: {demo_answer}.
+
+      Reason step-by-step and answer the following question.
+      {question}
+      {choices}
+      The correct answer is option: 
+
+  no_cot:
+    description: "Remove CoT instruction"
+    choice_style: paren_upper
+    prompt: |-
+      This is a question from {subject}.
+
+      {demo_question}
+      {demo_choices}
+      The correct answer is option: {demo_answer}.
+
+      Answer the following question.
+      {question}
+      {choices}
+      The correct answer is option: 
+
+  zero_shot:
+    description: "No one-shot demonstration"
+    choice_style: paren_upper
+    prompt: |-
+      This is a question from {subject}.
+
+      Reason step-by-step and answer the following question.
+      {question}
+      {choices}
+      The correct answer is option: 
+
+  # ── Perturbations (change style) ────────────────────────
+
+  paren_lower:
+    description: "Different one-shot example (dev index 1 instead of 0)"
+    choice_style: paren_lower
+    demo_index: 1
+    prompt: |-
+      This is a question from {subject}.
+
+      {demo_question}
+      {demo_choices}
+      The correct answer is option: {demo_answer}.
+
+      Reason step-by-step and answer the following question.
+      {question}
+      {choices}
+      The correct answer is option: 
+    
+  paren_numeric:
+    description: "Different one-shot example (dev index 1 instead of 0)"
+    choice_style: paren_numeric
+    demo_index: 1
+    prompt: |-
+      This is a question from {subject}.
+
+      {demo_question}
+      {demo_choices}
+      The correct answer is option: {demo_answer}.
+
+      Reason step-by-step and answer the following question.
+      {question}
+      {choices}
+      The correct answer is option: 
+  
+  dot_upper:
+    description: "Different one-shot example (dev index 1 instead of 0)"
+    choice_style: dot_upper
+    demo_index: 1
+    prompt: |-
+      This is a question from {subject}.
+
+      {demo_question}
+      {demo_choices}
+      The correct answer is option: {demo_answer}.
+
+      Reason step-by-step and answer the following question.
+      {question}
+      {choices}
+      The correct answer is option: 
+    
+  dot_lower:
+    description: "Different one-shot example (dev index 1 instead of 0)"
+    choice_style: dot_lower
+    demo_index: 1
+    prompt: |-
+      This is a question from {subject}.
+
+      {demo_question}
+      {demo_choices}
+      The correct answer is option: {demo_answer}.
+
+      Reason step-by-step and answer the following question.
+      {question}
+      {choices}
+      The correct answer is option: 
+  
+  dot_numeric:
+    description: "Different one-shot example (dev index 1 instead of 0)"
+    choice_style: dot_numeric
+    demo_index: 1
+    prompt: |-
+      This is a question from {subject}.
+
+      {demo_question}
+      {demo_choices}
+      The correct answer is option: {demo_answer}.
+
+      Reason step-by-step and answer the following question.
+      {question}
+      {choices}
+      The correct answer is option: 
+
+  dash_upper:
+    description: "Different one-shot example (dev index 1 instead of 0)"
+    choice_style: dash_upper
+    demo_index: 1
+    prompt: |-
+      This is a question from {subject}.
+
+      {demo_question}
+      {demo_choices}
+      The correct answer is option: {demo_answer}.
+
+      Reason step-by-step and answer the following question.
+      {question}
+      {choices}
+      The correct answer is option: 
+
+  dash_lower:
+    description: "Different one-shot example (dev index 1 instead of 0)"
+    choice_style: dash_lower
+    demo_index: 1
+    prompt: |-
+      This is a question from {subject}.
+
+      {demo_question}
+      {demo_choices}
+      The correct answer is option: {demo_answer}.
+
+      Reason step-by-step and answer the following question.
+      {question}
+      {choices}
+      The correct answer is option: 
+
+  dash_numeric:
+    description: "Different one-shot example (dev index 1 instead of 0)"
+    choice_style: dash_numeric
+    demo_index: 1
+    prompt: |-
+      This is a question from {subject}.
+
+      {demo_question}
+      {demo_choices}
+      The correct answer is option: {demo_answer}.
+
+      Reason step-by-step and answer the following question.
+      {question}
+      {choices}
+      The correct answer is option: 
+  
+  formal:
+    description: "Formal/instruction style with dot-format choices"
+    choice_style: dot_upper
+    prompt: |-
+      You are an expert in {subject} with deep domain knowledge and strong analytical reasoning abilities. 
+      Your task is to answer a multiple-choice question in the field of {subject} by selecting the single most correct option from the provided choices.
+
+      Below is an example demonstrating the expected question format and the expected answer format. Use it as a reference for how to structure your response.
+      Example:
+      Question: {demo_question}
+      Options: {demo_choices}
+      Answer: {demo_answer}
+
+      Now, using the same reasoning approach and output format demonstrated above, please answer the following multiple-choice question in the field of {subject}.
+
+      Question: {question}
+      Options: {choices}
+      Answers:
+
+  minimal:
+    description: "Stripped-down, no persona or instructions"
+    choice_style: dash_upper
+    prompt: |-
+      {question}
+      {choices}
+      The correct answer is option:

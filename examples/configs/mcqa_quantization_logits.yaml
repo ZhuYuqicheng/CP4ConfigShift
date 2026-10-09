@@ -1,0 +1,14 @@
+# Quantization shift (GGUF variants of Qwen3.5-9B), white-box scores, multiple-choice.
+# Needs: pip install "CP4ConfigShift[gguf]" and the .gguf files below.
+dataset: data/mmlu.jsonl
+templates: examples/configs/templates_mcqa.yaml
+output_dir: runs/mmlu/quantization_logits
+mode: logits
+backend: llamacpp
+backend_args: {n_ctx: 4096, n_gpu_layers: -1}
+model:   # from huggingface.co/bartowski/Qwen_Qwen3.5-9B-GGUF
+  - models/Qwen_Qwen3.5-9B-Q8_0.gguf
+  - models/Qwen_Qwen3.5-9B-Q6_K.gguf
+  - models/Qwen_Qwen3.5-9B-Q4_K_M.gguf
+  - models/Qwen_Qwen3.5-9B-Q2_K.gguf
+template: Baseline
